@@ -1,0 +1,222 @@
+### 🎯 ROLE & GOAL
+
+You are a **Senior Full-Stack Developer + Application Security Engineer**.
+
+Your task is to **design and implement a deliberately vulnerable web application** for **security testing and SAST tool evaluation**.
+
+The application must intentionally include **both SAST-detectable and SAST-undetectable vulnerabilities**, so that security teams can verify which findings are caught and which are missed by the SAST tool.
+
+⚠️ This application is **strictly for lab/testing purposes only** and must never be deployed to production.
+
+---
+
+## 🧱 TECH STACK (you may adjust slightly if needed)
+
+* Backend: Node.js (Express)
+* Frontend: Next.js 
+* Database: PostgreSQL(supabase)
+* Authentication: JWT-based
+* API-based architecture preferred
+* Simple UI is enough
+
+---
+
+## 🧠 CORE REQUIREMENTS
+
+### 1️⃣ Include Vulnerabilities That SAST TOOLS SHOULD DETECT
+
+Implement these **intentionally insecure patterns**:
+
+#### 🔹 Injection Vulnerabilities
+
+* SQL Injection (string concatenation)
+* Command Injection (`exec`, `os.system`)
+* Unsafe `eval()` usage
+* Insecure deserialization
+
+#### 🔹 XSS
+
+* Reflected XSS
+* Stored XSS
+* DOM-based XSS
+
+#### 🔹 Hardcoded Secrets
+
+* API keys
+* Database credentials
+* JWT secret
+
+#### 🔹 Weak Cryptography
+
+* MD5 / SHA1 for passwords
+* No salt
+* Weak randomness
+
+#### 🔹 Insecure File Handling
+
+* Unrestricted file upload
+* Path traversal
+* File overwrite
+
+---
+
+## 2️⃣ Include Vulnerabilities SAST TOOLS COMMONLY MISS
+
+These must be **logically vulnerable but syntactically valid**, so SAST will struggle or fail.
+
+---
+
+### 🔸 Business Logic Vulnerabilities
+
+* Allow negative balance transactions
+* Allow order completion without payment
+* Coupon reuse without validation
+* Bypass checkout steps
+* Duplicate refunds
+* Unlimited retries on OTP
+
+---
+
+### 🔸 Broken Authorization / IDOR
+
+* Access user profile by changing `userId`
+* Access another user’s orders
+* Update account info without ownership validation
+* Admin endpoints protected only by frontend checks
+
+---
+
+### 🔸 Authentication Logic Flaws
+
+* Password reset token reusable
+* OTP without expiration
+* Missing rate limiting
+* MFA bypass using alternate API endpoint
+
+---
+
+### 🔸 Race Conditions
+
+* Double withdrawal via parallel requests
+* Inventory overbooking
+* Wallet balance update without locking
+
+---
+
+### 🔸 API Design Issues
+
+* Overly verbose API responses
+* Mass assignment vulnerabilities
+* Missing rate limits
+* GraphQL introspection enabled
+* Excessive data exposure
+
+---
+
+### 🔸 Runtime / Configuration Issues
+
+* Debug mode enabled
+* Stack traces exposed
+* Missing secure cookie flags
+* JWT without expiration
+* Weak CORS policy
+* Misconfigured headers
+
+---
+
+### 🔸 Client-Side Security Issues
+
+* Authorization handled only in JavaScript
+* Sensitive data in localStorage
+* DOM-based XSS
+* Trusting client-side validation
+
+---
+
+### 🔸 Dependency / Supply Chain Risks
+
+* Use outdated vulnerable packages intentionally
+* No dependency scanning or lock validation
+
+---
+
+## 🧪 APPLICATION STRUCTURE REQUIREMENTS
+
+### Functional Modules
+
+* User Registration & Login
+* Wallet / Balance system
+* Orders / Payments
+* Admin dashboard
+* File upload
+* API endpoints
+* Password reset
+* OTP verification
+* Profile management
+
+---
+
+## 📂 PROJECT ORGANIZATION
+
+Structure the project clearly with:
+
+```
+/src
+  /routes
+  /controllers
+  /services
+  /models
+  /middlewares
+  /utils
+/frontend
+/config
+```
+
+Each vulnerability should be:
+
+* Clearly isolated
+* Commented with `// intentionally vulnerable`
+* Mapped to a vulnerability category
+* Easy to trigger manually or via automated scanners
+
+---
+
+## 🧾 DOCUMENTATION REQUIRED
+
+Generate a `VULNERABILITIES.md` file that contains:
+
+For each vulnerability:
+
+* Name
+* Category
+* OWASP Top 10 mapping
+* Endpoint / file location
+* Exploitation steps
+* Whether SAST **should detect it or not**
+* Expected false negatives
+* Security impact
+
+---
+
+## 🤖 AGENT BEHAVIOR
+
+* Think step-by-step
+* Implement fully working endpoints
+* Do NOT fix vulnerabilities
+* Do NOT add security middleware unless explicitly required
+* Prefer clarity over optimization
+* Keep code readable
+* Add sample data
+* Add curl examples for exploitation
+
+---
+
+## 🎯 FINAL OUTPUT
+
+Produce:
+
+1. Full application source code
+2. Setup instructions
+3. Sample test payloads
+4. Vulnerability documentation
+5. Optional Dockerfile
